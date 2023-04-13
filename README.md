@@ -7,7 +7,7 @@
 
 [github-ci]: https://github.com/igorlesik/rustamath_physics/actions/workflows/test.yml
 [github-ci-shields]: https://github.com/igorlesik/rustamath_physics/actions/workflows/test.yml/badge.svg
-[crates-io]: https://crates.io/crates/rustamath_mnmz
-[crates-io-shields]: https://img.shields.io/crates/v/rustamath_mnmz.svg
-[docs-rs]: https://docs.rs/rustamath_mnmz
+[crates-io]: https://crates.io/crates/rustamath_physics
+[crates-io-shields]: https://img.shields.io/crates/v/rustamath_physics.svg
+[docs-rs]: https://docs.rs/rustamath_physics
 [docs-rs-shields]: https://img.shields.io/badge/docs.rs-rustdoc-green.svg
