@@ -1,0 +1,18 @@
+[package]
+name = "rustamath_physics"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+keywords = ["scientific"]
+categories = ["science"]
+description = "Equations of physics and simple unit based Symbolic Regression"
+homepage = "https://github.com/igorlesik/rustamath_physics"
+repository = "https://github.com/igorlesik/rustamath_physics"
+readme = "README.md"
+#documentation =
+#workspace = "path/to/workspace/root"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+assert_float_eq = "1"
