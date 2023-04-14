@@ -17,3 +17,5 @@ readme = "README.md"
 [dependencies]
 assert_float_eq = "1"
 rustamath_mks = { version = "0.1" }
+rustamath_mnmz = { version = "0.1.1" }
+#rustamath_mnmz = { path = "../rustamath_mnmz" }

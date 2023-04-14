@@ -95,12 +95,13 @@ pub fn goodness_of_fit(id: usize, inputs: &[f64], outputs: &[f64], ssigmas: &[f6
     let mut equation_constants: Vec<f64> = Vec::new();
     equation_constants.resize(nr_cns_params, 1.0);
 
-    let mut equation = (equation_builder.new)(&equation_constants);
-
     if nr_cns_params > 0 && nr_measurements >= nr_cns_params {
         // Find constant parameters of the equation
-        fit::fit(&mut *equation);
+        fit::fit(equation_builder, inputs, outputs, &mut equation_constants,
+            nr_measurements, nr_inp_params);
     }
+
+    let mut equation = (equation_builder.new)(&equation_constants);
 
     let mut predictions: Vec<f64> = Vec::with_capacity(outputs.len());
 
@@ -172,15 +173,18 @@ fn test_circle_vs_square() {
 fn test_sine_vs_square() {
     //use crate::physics::*;
 
-    let inputs = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];
-    let outputs = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];
+    let inputs: [f64; 18] = [0.1, 0.2, 0.3, 0.5, 1.0, 1.1, 1.2, 1.3, 1.4, 1.6, 2.0, 2.4, 2.8, 3.2, 3.6, 4.0, 4.2, 4.4];
+    let mut outputs = vec![0.0f64; 18];
+    for (i, input) in inputs.iter().enumerate() {
+        outputs[i] = 10.5 * (input*2.0f64 + 1.5f64).sin() + 3.3;
+    }
 
-    //println!("\nDo 3 -> 18 which is close to circle perimeter 2*3.14*3\n");
     let eqs = find_equation(&[SCALAR_UNIT], &[SCALAR_UNIT], &inputs, &outputs);
 
     for (i, eq) in eqs.iter().enumerate() {
         let equation_info = &EQUATIONS[eq.0];
         println!("#{}: fit = {:8.2} {}", i+1, eq.1, equation_info.desc);
+        //println!("  {}", params);
     }
 /*
     let eq_index = get_equation_by_typeid(figure::circle::CirclePerimeter::params).unwrap();
