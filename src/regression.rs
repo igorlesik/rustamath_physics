@@ -9,6 +9,10 @@ use rustamath_mks::*;
 use super::{find_equation_by_units, EQUATIONS};
 
 mod fit;
+#[cfg(test)]
+mod test_sine;
+#[cfg(test)]
+mod test_circle;
 
 /// Get list of equations that sutisfy specified input/output unit types
 /// and fit to measured input/output values.
@@ -132,72 +136,4 @@ pub fn goodness_of_fit(id: usize, inputs: &[f64], outputs: &[f64], ssigmas: &[f6
     chi2 /= degrees_of_freedom as f64;
 
     chi2
-}
-
-// cargo test --lib test_circle_vs_square -- --nocapture
-#[cfg(test)]
-#[test]
-fn test_circle_vs_square() {
-    use crate::*;
-
-    if let Ok(nr_cores) = std::thread::available_parallelism() {
-        println!("Number of available CPU cores for parallel execution: {}", nr_cores);
-    }
-
-    println!("\nDo 3 -> 18 which is close to circle perimeter 2*3.14*3\n");
-    let eqs = find_equation(&[DISTANCE_UNIT], &[DISTANCE_UNIT], &[3.0], &[18.0]);
-
-    for (i, eq) in eqs.iter().enumerate() {
-        let equation_info = &EQUATIONS[eq.0];
-        println!("#{}: fit = {:8.2} {}", i+1, eq.1, equation_info.desc);
-    }
-
-    let eq_index = get_equation_by_typeid(figure::circle::CirclePerimeter::params).unwrap();
-    assert_eq!(eq_index, eqs[0].0);
-
-    println!("\nNext do 3 -> 12.1 which is close to square perimeter 3*4\n");
-    let eqs = find_equation(&[DISTANCE_UNIT], &[DISTANCE_UNIT], &[3.0], &[12.1]);
-
-    for (i, eq) in eqs.iter().enumerate() {
-        let equation_info = &EQUATIONS[eq.0];
-        println!("#{}: fit = {:8.2} {}", i+1, eq.1, equation_info.desc);
-    }
-
-    let eq_index = get_equation_by_typeid(figure::rectangle::SquarePerimeter::params).unwrap();
-    assert_eq!(eq_index, eqs[0].0);
-}
-
-// cargo test --lib test_sine_vs_square -- --nocapture
-#[cfg(test)]
-#[test]
-fn test_sine_vs_square() {
-    //use crate::physics::*;
-
-    let inputs: [f64; 18] = [0.1, 0.2, 0.3, 0.5, 1.0, 1.1, 1.2, 1.3, 1.4, 1.6, 2.0, 2.4, 2.8, 3.2, 3.6, 4.0, 4.2, 4.4];
-    let mut outputs = vec![0.0f64; 18];
-    for (i, input) in inputs.iter().enumerate() {
-        outputs[i] = 10.5 * (input*2.0f64 + 1.5f64).sin() + 3.3;
-    }
-
-    let eqs = find_equation(&[SCALAR_UNIT], &[SCALAR_UNIT], &inputs, &outputs);
-
-    for (i, eq) in eqs.iter().enumerate() {
-        let equation_info = &EQUATIONS[eq.0];
-        println!("#{}: fit = {:8.2} {}", i+1, eq.1, equation_info.desc);
-        //println!("  {}", params);
-    }
-/*
-    let eq_index = get_equation_by_typeid(figure::circle::CirclePerimeter::params).unwrap();
-    assert_eq!(eq_index, eqs[0].0);
-
-    println!("\nNext do 3 -> 12.1 which is close to square perimeter 3*4\n");
-    let eqs = find_equation(&[DISTANCE_UNIT], &[DISTANCE_UNIT], &[3.0], &[12.1]);
-
-    for (i, eq) in eqs.iter().enumerate() {
-        let equation_info = &EQUATIONS[eq.0];
-        println!("#{}: fit = {:8.2} {}", i+1, eq.1, equation_info.desc);
-    }
-
-    let eq_index = get_equation_by_typeid(figure::rectangle::SquarePerimeter::params).unwrap();
-    assert_eq!(eq_index, eqs[0].0);*/
 }
