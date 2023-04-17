@@ -17,6 +17,6 @@ fn test_sine() {
         //println!("  {}", params);
     }
 
-    let sine_eq_index = get_equation_by_typeid(function::sin::Sine::params).unwrap();
+    let sine_eq_index = get_equation_by_typeid(function::wave::Sine::params).unwrap();
     assert_eq!(sine_eq_index, eqs[0].0);
 }

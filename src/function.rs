@@ -3,4 +3,4 @@
 //! (c) 2023 Igor Lesik
 //! MIT license
 //!
-pub mod sin;
+pub mod wave;
